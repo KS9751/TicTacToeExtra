@@ -3,15 +3,26 @@
 #include "Board.h"
 using namespace std;
 
-Board::Board() {	
-}
+Board::Board(int size) {
+	this->size = size;
+	board = new string*[size];
 
+	for (int i = 0; i < size; i++) {
+		board[i] = new string[size];
+	}
+
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			board[i][j] = " ";
+		}
+	}
+}
 
 
 void Board::display() {
 	cout << "\n";
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
 			board[i][j].compare(" ") == 0 ? cout << "_" : cout << board[i][j];
 		}
 		cout << "\n";
@@ -21,8 +32,8 @@ void Board::display() {
 
 bool Board::isFull() {
 	checkSpace = 0;
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
 			checkSpace = board[i][j].compare(" ");
 			if (checkSpace == 0) {
 				return false;
@@ -33,65 +44,70 @@ bool Board::isFull() {
 	return true;
 }
 
-bool Board::isWinner() {
-	int check1;
-	int check2;
-	int checkSpace;
+bool Board::isWinner() {	
 
 	//Check for a horizontal line
-	for (int i = 0; i < 3; i++) {
-		check1 = board[i][0].compare(board[i][1]);
-		check2 = board[i][1].compare(board[i][2]);
-		if (board[i][0].compare(" ") != 0 && board[i][1].compare(" ") != 0 && board[i][2].compare(" ") != 0) {
-			checkSpace = 0;
+	for (int row = 0; row < size; row++) {
+		if (board[row][0].compare(" ") == 0) {
+			continue;
 		}
-		else {
-			checkSpace = 1;
+
+		int col = 1;
+		for (; col < size; col++) {
+			if (board[row][col].compare(board[row][0]) != 0) {
+				break;
+			}
 		}
-		if (check1 == 0 && check2 == 0 && checkSpace == 0) {
+
+		if (col == size) {
 			return true;
-		}
+		}		
 	}
 
 	//Check for a vertical line
-	for (int j = 0; j < 3; j++) {
-		check1 = board[0][j].compare(board[1][j]);
-		check2 = board[1][j].compare(board[2][j]);
-		if (board[0][j].compare(" ") != 0 && board[1][j].compare(" ") != 0 && board[2][j].compare(" ") != 0) {
-			checkSpace = 0;
+	for (int col = 0; col < size; col++) {
+		if (board[0][col].compare(" ") == 0) {
+			continue;
 		}
-		else {
-			checkSpace = 1;
+
+		int row = 1;
+		for (; row < size; row++) {
+			if (board[row][col].compare(board[0][col]) != 0) {
+				break;
+			}
 		}
-		if (check1 == 0 && check2 == 0 && checkSpace == 0) {
+
+		if (row == size) {
 			return true;
 		}
 	}
 
 	//Check for descending digonal
-	check1 = board[0][0].compare(board[1][1]);
-	check2 = board[1][1].compare(board[2][2]);
-	if (board[0][0].compare(" ") != 0 && board[1][1].compare(" ") != 0 && board[2][2].compare(" ") != 0) {
-		checkSpace = 0;
-	}
-	else {
-		checkSpace = 1;
-	}
-	if (check1 == 0 && check2 == 0 && checkSpace == 0) {
-		return true;
+	if (board[0][0].compare(" ") != 0) {
+		int i;
+		for (i = 0; i < size - 1; i++) {
+			if (board[i][i].compare(board[i + 1][i + 1]) != 0) {
+				break;
+			}
+		}
+
+		if (i == size - 1) {
+			return true;
+		}
 	}
 
 	//check for asending digonal
-	check1 = board[0][2].compare(board[1][1]);
-	check2 = board[1][1].compare(board[2][0]);
-	if (board[0][2].compare(" ") != 0 && board[1][1].compare(" ") != 0 && board[2][0].compare(" ") != 0) {
-		checkSpace = 0;
-	}
-	else {
-		checkSpace = 1;
-	}
-	if (check1 == 0 && check2 == 0 && checkSpace == 0) {
-		return true;
+	if (board[size - 1][0].compare(" ") != 0) {
+		int row, col;
+		for (row = size - 1, col = 0 ; row > 0; row--, col++) {
+			if (board[row][col].compare(board[row - 1][col + 1]) != 0) {
+				break;
+			}
+		}
+
+		if (row == 0) {
+			return true;
+		}
 	}
 
 	return false;
@@ -107,8 +123,8 @@ bool Board::checkMove(int row, int col) {
 }
 
 void Board::clear() {
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
 			board[i][j] = " ";
 		}
 	}

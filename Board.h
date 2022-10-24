@@ -5,14 +5,13 @@ using namespace std;
 
 class Board {
 private:
-	string board[3][3] = {
-		{" ", " ", " "},
-		{" ", " ", " "},
-		{" ", " ", " "}};
-	int count = 0;
+	string** board;
+	int size = 0;
 	int checkSpace = 0;
+
 public:
 	Board();
+	Board(int size);
 	void setBoard(int row, int col, string symbol);
 	void display();
 	bool isFull();
