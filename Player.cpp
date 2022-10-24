@@ -3,6 +3,10 @@
 #include "Player.h"
 using namespace std;
 
+Player::Player() {
+	points = 0;
+}
+
 Player::Player(string symbol) {
 	this->symbol = symbol;
 	points = 0;
@@ -21,8 +25,8 @@ void Player::getMove(int& r, int& c) {
 	cout << "Where is your input colum: \n";
 	cin >> col;
 
-	r = row;
-	c = col;	
+	r = row - 1;
+	c = col - 1;	
 }
 
 void Player::awardPoint() {

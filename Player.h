@@ -8,7 +8,8 @@ private:
 	int points;
 	
 public:
-	Player(string sybol);
+	Player();
+	Player(string symbol);
 	string getSymbol();
 	void getMove(int& r,int& c);
 	void awardPoint();
