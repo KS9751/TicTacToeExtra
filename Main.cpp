@@ -121,5 +121,9 @@ int main() {
 	}
 
 	cout << "Hope you like this game. See you next time!\n";
+
+	delete board;
+	delete players;
+
 	return 0;
 }
