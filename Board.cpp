@@ -133,3 +133,9 @@ void Board::clear() {
 void Board::setBoard(int row, int col, string symbol) {
 	board[row][col] = symbol;
 }
+
+Board::~Board() {
+	for (int i = 0; i < size; i++) {
+		delete board[i];
+	}
+}

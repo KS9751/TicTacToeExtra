@@ -18,4 +18,5 @@ public:
 	bool isWinner();
 	bool checkMove(int row, int col);
 	void clear();
+	~Board();
 };

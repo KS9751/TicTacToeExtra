@@ -14,4 +14,5 @@ public:
 	void getMove(int& r,int& c);
 	void awardPoint();
 	int getPoints();
+	~Player();
 };

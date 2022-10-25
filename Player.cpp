@@ -37,5 +37,9 @@ int Player::getPoints() {
 	return points;
 }
 
+Player::~Player() {
+
+}
+
 
 
